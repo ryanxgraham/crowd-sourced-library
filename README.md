@@ -1,68 +1,90 @@
+# Crowd Sourced Library
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+### Inspiration
 
-## Available Scripts
+I almost never get my books back from people after lending one to them. I have bought Douglas Adam’s ```Long Dark Tea-Time of the Soul``` no fewer than six times because I lend it out, forget who I give it to and never see it again.  So with that in mind, I wanted a way to keep track of my collection of books.  Who has them, when did I lend it to them, etc.
 
-In the project directory, you can run:
+### Concept
 
-### `npm start`
+A book exchange website, where users can upload the books they own to their profile.  Users can see each other's collections, and request to borrow a book from another user, or request that a book to be returned.  
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Format
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* A Library is a community of users who can see each other’s collections.
+* A new user would create an account, and then be prompted to either create a new Library, join an existing one, or add books to their collection.  
+* Each book available in the Library can be rated and reviewed by members, and members can give borrowers a rating based on the condition of the book upon return.
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend
 
-### `npm run build`
+* ```Express```
+* ```Postgres```
+* ```GraphQL```
+* ```Google Books API```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+* ```React```
+* ```Redux```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Schema
+```
+{
+  "user" {
+    "userId": "int"
+    "userInfo" {
+      "username": "string",
+      "name" {
+        "first": "string",
+        "last": "string"
+      }
+      "location" {
+        "city": "string",
+        "state": string
+       }
+      "contact" {
+        "phone":"555-555-5555",
+        "email":"user@email.com"
+      }
+    }
+    "libraries" {
+      "libId1",
+      "libId2",
+      ...
+    }
+    "ownedBooks" {
+      "bookId1" {
+        "checkedOut":"bool",
+        "borrower":"userId"
+      },
+      ...
+    },
+    "borrowedBooks" {
+     "userId1" {
+       "bookId" {
+         "owner":"userId"
+       }
+     }
+    }
+  }
+},
+  "library" {
+    "libId": "int"
+    "owner" {
+      userId
+    },
+    "members" {
+      userId,
+      ...
+    },
+    "books" {
+      bookId,
+      ...
+    }
+  }
+}
+```
+## Author
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* **Ryan Graham** - [Github](https://github.com/ryanxgraham)
