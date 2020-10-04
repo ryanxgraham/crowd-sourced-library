@@ -201,25 +201,23 @@ We will then add this info as a new `book` entry into the user's owned books.
 ```
 {
   book {
-    id: int,
-    ownedBy: [user.id (int)],
-    googleVolumeId: string,
-    title : string,
-    subtitle : string,
-    authors[] : [string],
-    publishedDate : string,
-    Description : string,
-    imageLinks : {
-      "smallThumbnail": string,
-      "thumbnail": string
-    },
-    checkedOut{
-      isAvailable: bool
-      borrowedBy: user.id (int)
-      count: int,
-    },
-    ratings: [int],
-    reviews: [string]
+    id: uuid,
+    googleVolumeId: test,
+    title : text,
+    subtitle : text,
+    authors : text,
+    publishedDate : text,
+    description : text,
+    smallThumbnail: text,
+    thumbnail: text
+    isAvailable: bool
+    availableCopies: int
+    totalCopies: int
+  },
+
+  bookOwners {
+    ownerId: uuid -> user.id,
+    bookId: uuid -> book.id
   }
 }
 ```
@@ -229,37 +227,13 @@ We will then add this info as a new `book` entry into the user's owned books.
 ```
 {
   user {
-    id: int,
-    userInfo {
-      username: string,
-      name {
-        first: string,
-        last: string
-      },
-      location {
-        city: string,
-        state: string
-       },
-      contact {
-        phone: string (555-555-5555),
-        email: string (user@email.com)
-      }
-    }
-    libraries {
-      owned: [lib.id(int)],
-      member: [lib.id(int)]
-    }
-    ownedBooks {
-      [book.id(int)]
-    },
-    borrowedBooks {
-      [user.id.ownedBooks.book.id(int)]
-    },
-    favoriteBook {
-      book.id (int)
-    }
-  }
-}  
+    id: uuid,
+    userName: text,
+    email: text,
+    createdAt: timestamp,
+    firstName: text,
+    lastName: text
+}
 ```
 
 ###### Library Schema
@@ -267,9 +241,24 @@ We will then add this info as a new `book` entry into the user's owned books.
 ```
 {
   lib {
-    owner: user.id
-    members: [user.id]
-    books: [members.user.id.ownedBooks.book.id]
+    id: uuid,
+    createdAt: timestamp,
+    libName: text
+  },
+
+  libOwners {
+    libId: uuid -> lib.id,
+    ownerId: uuid -> user.id    
+  },
+
+  libMembers {
+    libId: uuid -> lib.id,
+    memberId: uuid -> user.id
+  },
+
+  libBooks {
+    libId: uuid -> lib.id,
+    bookId: uuid -> book.id
   }
 }
 ```
