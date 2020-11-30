@@ -195,6 +195,7 @@ We will then add this info as a new `book` entry into the user's owned books.
 ### Schemas
 
 `note: some of this is definitely psuedocode right now.`
+![](/schema.png)
 
 ###### Book Schema
 
